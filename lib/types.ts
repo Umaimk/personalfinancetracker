@@ -8,3 +8,7 @@ export interface Transaction {
   category: string;
   date: string; // ISO date string, e.g. "2026-08-29"
 }
+export interface Budget {
+  category: string;
+  limit: number;
+}
