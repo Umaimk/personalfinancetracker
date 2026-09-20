@@ -8,11 +8,36 @@ import { Transaction } from "@/lib/types";
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [insight, setInsight] = useState<string | null>(null);
+  const [insightLoading, setInsightLoading] = useState(false);
+  const [insightError, setInsightError] = useState<string | null>(null);
 
   useEffect(() => {
     setTransactions(getTransactions());
     setLoaded(true);
   }, []);
+
+  async function handleGetInsights() {
+    setInsightError(null);
+    setInsightLoading(true);
+    setInsight(null);
+    try {
+      const res = await fetch("/api/insights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transactions }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to generate insights.");
+      }
+      setInsight(data.insight);
+    } catch (err) {
+      setInsightError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setInsightLoading(false);
+    }
+  }
 
   const income = transactions
     .filter((t) => t.type === "income")
@@ -52,6 +77,29 @@ export default function Home() {
           <p className="text-sm text-slate-500">Expenses</p>
           <p className="mt-1 text-2xl font-semibold text-expense">${expense.toFixed(2)}</p>
         </div>
+      </div>
+
+      <div className="mt-6 rounded-lg border border-brand-light bg-brand-light p-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold">✨ AI Spending Insights</h2>
+          <button
+            onClick={handleGetInsights}
+            disabled={insightLoading || transactions.length === 0}
+            className="rounded-md bg-brand px-3 py-1.5 text-xs font-medium text-white hover:opacity-90 disabled:opacity-50"
+          >
+            {insightLoading ? "Analyzing..." : "Generate Insight"}
+          </button>
+        </div>
+
+        {transactions.length === 0 && (
+          <p className="mt-2 text-sm text-slate-600">Add some transactions first.</p>
+        )}
+        {insightError && (
+          <p role="alert" className="mt-2 text-sm text-expense">
+            {insightError}
+          </p>
+        )}
+        {insight && <p className="mt-2 text-sm text-slate-700">{insight}</p>}
       </div>
 
       <div className="mt-8">

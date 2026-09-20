@@ -25,6 +25,33 @@ export default function NewTransactionPage() {
   const [category, setCategory] = useState(categories[2]);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [error, setError] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  async function handleSuggestCategory() {
+    if (!description.trim()) {
+      setAiError("Enter a description first.");
+      return;
+    }
+    setAiError(null);
+    setAiLoading(true);
+    try {
+      const res = await fetch("/api/categorize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: description.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to get suggestion.");
+      }
+      setCategory(data.category);
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setAiLoading(false);
+    }
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -119,9 +146,19 @@ export default function NewTransactionPage() {
         </fieldset>
 
         <div>
-          <label htmlFor="category" className="block text-sm font-medium">
-            Category
-          </label>
+          <div className="flex items-center justify-between">
+            <label htmlFor="category" className="block text-sm font-medium">
+              Category
+            </label>
+            <button
+              type="button"
+              onClick={handleSuggestCategory}
+              disabled={aiLoading}
+              className="text-xs font-medium text-brand hover:underline disabled:opacity-50"
+            >
+              {aiLoading ? "Thinking..." : "✨ AI Suggest"}
+            </button>
+          </div>
           <select
             id="category"
             value={category}
@@ -134,6 +171,11 @@ export default function NewTransactionPage() {
               </option>
             ))}
           </select>
+          {aiError && (
+            <p role="alert" className="mt-1 text-xs text-expense">
+              {aiError}
+            </p>
+          )}
         </div>
 
         <div>
