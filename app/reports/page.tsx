@@ -52,7 +52,7 @@ export default function ReportsPage() {
       ) : (
         <>
           <div className="mt-6 rounded-lg border border-black/10 p-4">
-            <p className="text-sm text-slate-500">Total Spending</p>
+            <p className="text-sm text-slate-600">Total Spending</p>
             <p className="mt-1 text-2xl font-semibold text-expense">
               ${totalExpenses.toFixed(2)}
             </p>

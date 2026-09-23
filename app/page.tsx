@@ -64,17 +64,17 @@ export default function Home() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-lg border border-black/10 p-4">
-          <p className="text-sm text-slate-500">Balance</p>
+          <p className="text-sm text-slate-600">Balance</p>
           <p className={`mt-1 text-2xl font-semibold ${balance >= 0 ? "text-income" : "text-expense"}`}>
             ${balance.toFixed(2)}
           </p>
         </div>
         <div className="rounded-lg border border-black/10 p-4">
-          <p className="text-sm text-slate-500">Income</p>
+          <p className="text-sm text-slate-600">Income</p>
           <p className="mt-1 text-2xl font-semibold text-income">${income.toFixed(2)}</p>
         </div>
         <div className="rounded-lg border border-black/10 p-4">
-          <p className="text-sm text-slate-500">Expenses</p>
+          <p className="text-sm text-slate-600">Expenses</p>
           <p className="mt-1 text-2xl font-semibold text-expense">${expense.toFixed(2)}</p>
         </div>
       </div>
@@ -118,7 +118,7 @@ export default function Home() {
               <li key={t.id} className="flex items-center justify-between px-4 py-3">
                 <div>
                   <p className="font-medium">{t.description}</p>
-                  <p className="text-sm text-slate-500">{t.category} &middot; {t.date}</p>
+                  <p className="text-sm text-slate-600">{t.category} &middot; {t.date}</p>
                 </div>
                 <span className={t.type === "income" ? "text-income" : "text-expense"}>
                   {t.type === "income" ? "+" : "-"}${t.amount.toFixed(2)}

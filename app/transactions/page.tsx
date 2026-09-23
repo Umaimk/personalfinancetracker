@@ -48,7 +48,7 @@ export default function TransactionsPage() {
             <li key={t.id} className="flex items-center justify-between px-4 py-3">
               <Link href={`/transactions/${t.id}`} className="flex-1">
                 <p className="font-medium">{t.description}</p>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-600">
                   {t.category} &middot; {t.date}
                 </p>
               </Link>
@@ -58,7 +58,7 @@ export default function TransactionsPage() {
                 </span>
                 <button
                   onClick={() => handleDelete(t.id)}
-                  className="text-sm text-slate-400 hover:text-expense"
+                  className="text-sm text-slate-600 hover:text-expense"
                   aria-label={`Delete ${t.description}`}
                 >
                   Delete

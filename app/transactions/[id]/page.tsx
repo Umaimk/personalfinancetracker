@@ -55,21 +55,21 @@ export default function TransactionDetailPage() {
       <div className="mt-6 max-w-md rounded-lg border border-black/10 p-4">
         <dl className="space-y-3 text-sm">
           <div className="flex justify-between">
-            <dt className="text-slate-500">Amount</dt>
+            <dt className="text-slate-600">Amount</dt>
             <dd className={transaction.type === "income" ? "text-income" : "text-expense"}>
               {transaction.type === "income" ? "+" : "-"}${transaction.amount.toFixed(2)}
             </dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-slate-500">Type</dt>
+            <dt className="text-slate-600">Type</dt>
             <dd className="capitalize">{transaction.type}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-slate-500">Category</dt>
+            <dt className="text-slate-600">Category</dt>
             <dd>{transaction.category}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-slate-500">Date</dt>
+            <dt className="text-slate-600">Date</dt>
             <dd>{transaction.date}</dd>
           </div>
         </dl>

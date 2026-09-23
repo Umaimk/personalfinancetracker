@@ -5,7 +5,7 @@
   --foreground: #171717;
   --brand: #4f46e5;
   --brand-light: #eef2ff;
-  --income: #16a34a;
+  --income: #15803d;
   --expense: #dc2626;
 }
 
@@ -20,12 +20,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   background: var(--background);
